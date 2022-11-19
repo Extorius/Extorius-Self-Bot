@@ -390,7 +390,7 @@ local OnMessageEvent =
 						end
 					elseif message == "1" or message == "2" or message == "3" or message == "4" or message == "5" or message == "6" or message == "7" or message == "8" or message == "9" then
 						game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-							player .. " has been added to the Idiot Wall of Fame. You don't say the number, you say the word.",
+							"You don't say the number, you say the word, "..player..".",
 							"All"
 						)
 					end
