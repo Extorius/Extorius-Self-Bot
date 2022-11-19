@@ -282,7 +282,7 @@ Gives the speaker points.
 ## Admin Players Only
 #### set points (player) (amount)
 Sets the player's points to amount.
-####add points (player) (amount)
+#### add points (player) (amount)
 Adds amount to the player's points.
 #### remove points (player) (amount)
 Removes amount from the player's points.
