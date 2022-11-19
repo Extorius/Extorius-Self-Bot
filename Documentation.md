@@ -89,29 +89,29 @@ local Command_List = {
 ## Configuring Messages
 ```lua
 local Message_list = {
-	On_Move = { -- The message used whenever a player uses forwards, backwards, etc.
+	["On_Move"] = { -- The message used whenever a player uses forwards, backwards, etc.
 		["Enabled"] = true, -- Whether this message is enabled or not.
 		["Message"] = "[-_C] _P has made me move _D." -- The message itself. "_C" replaces with the cost, "_P" replaces with the speaker's username, "_D" replaces with the direction.
 	},
-	On_Jump = { -- The message used whenever a player uses jump.
+	["On_Jump"] = { -- The message used whenever a player uses jump.
 		["Enabled"] = true,
 		["Message"] = "[-_C] _P has made me jump."
 	},
-	On_Die = { -- The message used whenever a player uses die.
+	["On_Die"] = { -- The message used whenever a player uses die.
 		["Enabled"] = true,
 		["Message"] = "[-_C] _P has made me die."
 	},
-	On_Points = { -- The message used whenever a player uses points.
+	["On_Points"] = { -- The message used whenever a player uses points.
 		["Enabled"] = true,
 		["Message"] = "[_B] _P's points." -- "_B" replaces with the speaker's points / balance.
 	},
-	On_Gamble = { -- The message used whenever a player uses gamble.
+	["On_Gamble"] = { -- The message used whenever a player uses gamble.
 		["Enabled"] = true,
 		["Success"] = "[+_A] Congratulations, _P.", -- The message when a player wins. "_A" replaces with the amount their lost / won.
 		["Lost"] = "[-_A] Better luck next time, _P.", -- The message when a player lost.
 		["Cooldown"] = "You're still on cooldown, _P." -- The message when the player's still on cooldown.
 	},
-	On_Work = { -- The message used whenever a player uses work.
+	["On_Work"] = { -- The message used whenever a player uses work.
 		["Enabled"] = true,
 		["Success"] = "[+_A] _P has completed work.",
 		["Cooldown"] = "You're still on cooldown, _P." -- The message when the player's still on cooldown.
@@ -122,16 +122,16 @@ local Message_list = {
 ## Points and Values
 ```lua
 local Points_List = { -- This fun and intuitive points system prevents spam for you, and keeps the bot fun for others.
-	On_Move = 5 -- How many points are deducted for forwards, backwards, etc movements.
-	On_Jump = 0 -- How many points are deducted for jump.
-	On_Die = 50 -- How many points are deducted for die.
-	On_Points = 0 -- How many points are deducted for die.
-	On_Gamble = {
+	["On_Move"] = 5 -- How many points are deducted for forwards, backwards, etc movements.
+	["On_Jump"] = 0 -- How many points are deducted for jump.
+	["On_Die"] = 50 -- How many points are deducted for die.
+	["On_Points"] = 0 -- How many points are deducted for die.
+	["On_Gamble"] = {
 		["Win"] = 25, -- How many points are awarded for winning.
 		["Lose"] = 20, -- How many points are deducted for losing.
 		["Cooldown"] = 60 -- How long it takes player's to use the command again. (In seconds)
 	}
-	On_Work = {
+	["On_Work"] = {
 		["Amount"] = 30, -- How many points are awarded for working
 		["Cooldown"] = 120 -- How long it takes player's to use the command again. (In seconds)
 	}
