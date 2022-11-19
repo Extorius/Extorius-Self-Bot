@@ -1,6 +1,5 @@
-# Extorius Self-Bot
+# Script Documentation
 This is documentation for Extorius Self-Bot.
-All documentation is just a speculation of what will be added. None of this will work as of now.
 
 ## Booting the Script
 ```lua
@@ -254,3 +253,37 @@ local Points_List = { -- This fun and intuitive points system prevents spam for 
 	}
 }
 ```
+
+# Commands Documentation
+-
+## Info
+- Speaker being whoever used the command.
+- 
+## Any Player
+-
+### forwards
+#### Makes the character move forwards.
+-
+### backwards
+#### Makes the character move backwards.
+-
+### left
+#### Makes the character move left.
+-
+### right
+#### Makes the character move right.
+-
+### jump
+#### Makes the character jump.
+-
+### die
+#### Makes the character die.
+-
+### points
+#### Displays / Says how many points the speaker has.
+-
+### gamble
+#### Has a chance of adding or removing points from the speaker.
+-
+### work
+#### Gives the speaker points.
