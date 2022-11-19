@@ -19,68 +19,68 @@ local Bot_Version = "Rate My Avatar"
 ```lua
 local Command_List = {
 	["forwards"] = {
-		["Makes the character move forwards."] -- Description
+		["Description"] = "Makes the character move forwards." -- Description
 		Aliases = { -- Other acceptable words / phrases users can say to use the same command. Non case-sensitive.
-			["forward"],
-			["walk"],
-			["move"],
-			["1"]
+			["Alias1"] = "forward",
+			["Alias2"] = "walk",
+			["Alias3"] = "move",
+			["Alias4"] = "1"
 		}
 	},
 	["backwards"] = {
-		["Makes the character move backwards."]
+		["Description"] = "Makes the character move backwards."
 		Aliases = {
-			["backward"],
-			["down"],
-			["back"],
-			["2"]
+			["Alias1"] = "backward",
+			["Alias2"] = "down",
+			["Alias3"] = "back",
+			["Alias4"] = "2"
 		}
 	},
 	["left"] = {
-		["Makes the character move left."]
+		["Description"] = "Makes the character move left."
 		Aliases = {
-			["3"]
+			["Alias"] = "3"
 		}
 	},
 	["right"] = {
-		["Makes the character move right."]
+		["Description"] = "Makes the character move right."
 		Aliases = {
-			["4"]
+			["Alias"] = "4"
 		}
 	},
 	["jump"] = {
-		["Makes the character jump."]
+		["Description"] = "Makes the character jump."
 		Aliases = {
-			["up"],
-			["5"]
+			["Alias1"] = "up",
+			["Alias2"] = "5"
 		}
 	},
 	["die"] = {
-		["Makes the character die."]
+		["Description"] = "Makes the character die."
 		Aliases = {
-			["oof"],
-			["kill"],
-			["dead"],
-			["6"]
+			["Alias1"] = "oof",
+			["Alias2"] = "kill",
+			["Alias3"] = "dead",
+			["Alias4"] = "6"
 		}
 	},
 	["points"] = {
-		["Displays / Says how many points the speaker has."] -- Speaker being whoever used the command.
+		["Description"] = "Displays / Says how many points the speaker has." -- Speaker being whoever used the command.
 		Aliases = {
-			["balance"],
-			["7"]
+			["Alias1"] = "balance",
+			["Alias2"] = "7"
 		}
 	},
 	["gamble"] = {
-		["Has a chance of adding or removing points from the speaker."]
+		["Description"] = "Has a chance of adding or removing points from the speaker."
 		Aliases = {
-			["8"]
+			["Alias"] = "8"
 		}
 	},
 	["work"] = {
-		["Gives the speaker points."]
+		["Description"] = "Gives the speaker points."
 		Aliases = {
-			["9"]
+			["Alias"] = "9"
 		}
 	},
 }
