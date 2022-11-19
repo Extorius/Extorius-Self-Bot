@@ -90,31 +90,31 @@ local Command_List = {
 ```lua
 local Message_list = {
 	On_Move = { -- The message used whenever a player uses forwards, backwards, etc.
-		true, -- Whether this message is enabled or not.
-		"[-_C] _P has made me move _D." -- The message itself. "_C" replaces with the cost, "_P" replaces with the speaker's username, "_D" replaces with the direction.
+		["Enabled"] = true, -- Whether this message is enabled or not.
+		["Message"] = "[-_C] _P has made me move _D." -- The message itself. "_C" replaces with the cost, "_P" replaces with the speaker's username, "_D" replaces with the direction.
 	},
 	On_Jump = { -- The message used whenever a player uses jump.
-		true,
-		"[-_C] _P has made me jump."
+		["Enabled"] = true,
+		["Message"] = "[-_C] _P has made me jump."
 	},
 	On_Die = { -- The message used whenever a player uses die.
-		true,
-		"[-_C] _P has made me die."
+		["Enabled"] = true,
+		["Message"] = "[-_C] _P has made me die."
 	},
 	On_Points = { -- The message used whenever a player uses points.
-		true,
-		"[_B] _P's points." -- "_B" replaces with the speaker's points / balance.
+		["Enabled"] = true,
+		["Message"] = "[_B] _P's points." -- "_B" replaces with the speaker's points / balance.
 	},
 	On_Gamble = { -- The message used whenever a player uses gamble.
-		true,
-		"[+_A] Congratulations, _P.", -- The message when a player wins. "_A" replaces with the amount their lost / won.
-		"[-_A] Better luck next time, _P.", -- The message when a player lost.
-		"You're still on cooldown, _P." -- The message when the player's still on cooldown.
+		["Enabled"] = true,
+		["Success"] = "[+_A] Congratulations, _P.", -- The message when a player wins. "_A" replaces with the amount their lost / won.
+		["Lost"] = "[-_A] Better luck next time, _P.", -- The message when a player lost.
+		["Cooldown"] = "You're still on cooldown, _P." -- The message when the player's still on cooldown.
 	},
 	On_Work = { -- The message used whenever a player uses work.
-		true,
-		"[+_A] _P has done work.",
-		"You're still on cooldown, _P." -- The message when the player's still on cooldown.
+		["Enabled"] = true,
+		["Success"] = "[+_A] _P has completed work.",
+		["Cooldown"] = "You're still on cooldown, _P." -- The message when the player's still on cooldown.
 	},
 }
 ```
