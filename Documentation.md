@@ -287,7 +287,7 @@ Adds amount to the player's points.
 #### remove points (player) (amount)
 Removes amount from the player's points.
 
-####add blacklist (player)
+#### add blacklist (player)
 That player will no longer be able to use any commands.
 #### remove blacklist (player)
 That player will be able to use commands again.
