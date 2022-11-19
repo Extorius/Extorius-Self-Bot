@@ -118,3 +118,22 @@ local Message_list = {
 	},
 }
 ```
+
+## Points and Values
+```lua
+local Points_List = { -- This fun and intuitive points system prevents spam for you, and keeps the bot fun for others.
+	On_Move = 5 -- How many points are deducted for forwards, backwards, etc movements.
+	On_Jump = 0 -- How many points are deducted for jump.
+	On_Die = 50 -- How many points are deducted for die.
+	On_Points = 0 -- How many points are deducted for die.
+	On_Gamble = {
+		["Win"] = 25, -- How many points are awarded for winning.
+		["Lose"] = 20, -- How many points are deducted for losing.
+		["Cooldown"] = 60 -- How long it takes player's to use the command again. (In seconds)
+	}
+	On_Work = {
+		["Amount"] = 30, -- How many points are awarded for working
+		["Cooldown"] = 120 -- How long it takes player's to use the command again. (In seconds)
+	}
+}
+```
