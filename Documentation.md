@@ -3,7 +3,7 @@ This is documentation for Extorius Self-Bot.
 
 ## Booting the Script
 ```lua
-loadstring(game:HttpGet('https://raw.githubusercontent.com/Extorius/Scripts/main/Self%20Bot.lua'))()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/Extorius/Extorius-Self-Bot/resources/script.lua'))()
 ```
 ### Configuring Which Version
 ```lua
