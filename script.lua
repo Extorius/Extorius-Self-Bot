@@ -98,6 +98,11 @@ repeat
 until game:GetService("Players") and game:GetService("Workspace") and game:GetService("ReplicatedStorage") and
     game:GetService("UserInputService")
 
+for i=1,100 do
+	task.wait()
+	print("Script is going to be obfuscated soon. This is your heads up.")
+end
+
 for i, v in ipairs(game:GetService("Players"):GetPlayers()) do
 	if not isfile("Self Bot RMA/saved_points/"..tostring(v)..".txt") then
 		if table.find(Admins, v.Name) then
