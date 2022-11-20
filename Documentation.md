@@ -4,42 +4,58 @@
 - Replace (player) with the username / display name of the player you want the command to effect. (String)
 - Replace (amount) with the amount you want to take affect. (Integer)
 ## Any Player
-#### forwards
+> forwards
+
 Makes the character move forwards.
-#### backwards
+> backwards
+
 Makes the character move backwards.
-#### left
+> left
+
 Makes the character move left.
-#### right
+> right
+
 Makes the character move right.
-#### jump
+> jump
+
 Makes the character jump.
-#### die
+> die
+
 Makes the character die.
-#### points
+> points
+
 Displays / Says how many points the speaker has.
-#### gamble
+> gamble
+
 Has a chance of adding or removing points from the speaker.
-#### work
+> work
+
 Gives the speaker points.
 
 ## Admin Players Only
-#### set points (player) (amount)
+> set points (player) (amount)
+
 Sets the player's points to amount.
-#### add points (player) (amount)
+> add points (player) (amount)
+
 Adds amount to the player's points.
-#### remove points (player) (amount)
+> remove points (player) (amount)
+
 Removes amount from the player's points.
 
-#### add blacklist (player)
+> add blacklist (player)
+
 That player will no longer be able to use any commands.
-#### remove blacklist (player)
+> remove blacklist (player)
+
 That player will be able to use commands again.
 
 ## Bot / Owner Only
-#### add admin (player)
+> add admin (player)
+
 That player will be able to use admin commands.
-#### remove admin (player)
+> remove admin (player)
+
 That player will no longer be able to use admin commands.
 
 # Script Documentation
