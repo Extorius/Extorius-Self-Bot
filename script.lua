@@ -6,90 +6,105 @@ if not isfolder("Self Bot RMA") then
 end
 if not isfolder("Self Bot RMA/saved_points") then
     makefolder("Self Bot RMA/saved_points")
-    for i,v in ipairs(game:GetService("Players"):GetPlayers()) do
-    	if table.find(Admins, v.Name) then
-    		writefile("Self Bot RMA/saved_points/"..tostring(v)..".txt", game:GetService("HttpService"):JSONEncode(100000))
-    	else
-			writefile("Self Bot RMA/saved_points/"..tostring(v)..".txt", game:GetService("HttpService"):JSONEncode(50))
-		end
-	end
+    for i, v in ipairs(game:GetService("Players"):GetPlayers()) do
+        if table.find(Admins, v.Name) then
+            writefile(
+                "Self Bot RMA/saved_points/" .. tostring(v) .. ".txt",
+                game:GetService("HttpService"):JSONEncode(100000)
+            )
+        else
+            writefile(
+                "Self Bot RMA/saved_points/" .. tostring(v) .. ".txt",
+                game:GetService("HttpService"):JSONEncode(50)
+            )
+        end
+    end
 end
 if not isfolder("Self Bot RMA/saved_blacklists") then
     makefolder("Self Bot RMA/saved_blacklists")
-    for i,v in ipairs(Blacklists) do
-    	writefile("Self Bot RMA/saved_blacklists/"..v..".txt", "This player is blacklisted.")
-	end
+    for i, v in ipairs(Blacklists) do
+        writefile("Self Bot RMA/saved_blacklists/" .. v .. ".txt", "This player is blacklisted.")
+    end
 end
 if not isfolder("Self Bot RMA/saved_admins") then
     makefolder("Self Bot RMA/saved_admins")
-    for i,v in ipairs(Admins) do
-    	writefile("Self Bot RMA/saved_admins/"..v..".txt", "This player is a admin.")
-	end
+    for i, v in ipairs(Admins) do
+        writefile("Self Bot RMA/saved_admins/" .. v .. ".txt", "This player is a admin.")
+    end
 end
 
 local function SetPoints(player, amount)
-	writefile("Self Bot RMA/saved_points/"..tostring(player)..".txt", game:GetService("HttpService"):JSONEncode(tonumber(amount)))
+    writefile(
+        "Self Bot RMA/saved_points/" .. tostring(player) .. ".txt",
+        game:GetService("HttpService"):JSONEncode(tonumber(amount))
+    )
 end
 local function ReturnPoints(player)
-	if isfile("Self Bot RMA/saved_points/"..tostring(player)..".txt") then
-		return tonumber(readfile("Self Bot RMA/saved_points/"..tostring(player)..".txt"))
-	end
+    if isfile("Self Bot RMA/saved_points/" .. tostring(player) .. ".txt") then
+        return tonumber(readfile("Self Bot RMA/saved_points/" .. tostring(player) .. ".txt"))
+    end
 end
 local function GivePoints(player, amount)
-	if isfile("Self Bot RMA/saved_points/"..tostring(player)..".txt") then
-		Original = ReturnPoints(player)
-		writefile("Self Bot RMA/saved_points/"..tostring(player)..".txt", game:GetService("HttpService"):JSONEncode(tonumber(Original+amount)))
-	end
+    if isfile("Self Bot RMA/saved_points/" .. tostring(player) .. ".txt") then
+        Original = ReturnPoints(player)
+        writefile(
+            "Self Bot RMA/saved_points/" .. tostring(player) .. ".txt",
+            game:GetService("HttpService"):JSONEncode(tonumber(Original + amount))
+        )
+    end
 end
 local function RemovePoints(player, amount)
-	if isfile("Self Bot RMA/saved_points/"..tostring(player)..".txt") then
-		Original = ReturnPoints(player)
-		writefile("Self Bot RMA/saved_points/"..tostring(player)..".txt", game:GetService("HttpService"):JSONEncode(tonumber(Original-amount)))
-	end
+    if isfile("Self Bot RMA/saved_points/" .. tostring(player) .. ".txt") then
+        Original = ReturnPoints(player)
+        writefile(
+            "Self Bot RMA/saved_points/" .. tostring(player) .. ".txt",
+            game:GetService("HttpService"):JSONEncode(tonumber(Original - amount))
+        )
+    end
 end
 
 local function ReturnBlacklist(player)
-	IsBlacklisted = false
-	for _,v in ipairs(listfiles("Self Bot RMA/saved_blacklists")) do
-		if v:match(player) then
-			IsBlacklisted = true
-		end
-	end
-	
-	return IsBlacklisted
+    IsBlacklisted = false
+    for _, v in ipairs(listfiles("Self Bot RMA/saved_blacklists")) do
+        if v:match(player) then
+            IsBlacklisted = true
+        end
+    end
+
+    return IsBlacklisted
 end
 local function ReturnAdmin(player)
-	IsAdmin = false
-	for _,v in ipairs(listfiles("Self Bot RMA/saved_admins")) do
-		if v:match(player) then
-			IsAdmin = true
-		end
-	end
-	
-	return IsAdmin
+    IsAdmin = false
+    for _, v in ipairs(listfiles("Self Bot RMA/saved_admins")) do
+        if v:match(player) then
+            IsAdmin = true
+        end
+    end
+
+    return IsAdmin
 end
 
 local function BlacklistPlayer(player)
-	writefile("Self Bot RMA/saved_blacklists/"..tostring(player)..".txt", "This player is blacklisted.")
+    writefile("Self Bot RMA/saved_blacklists/" .. tostring(player) .. ".txt", "This player is blacklisted.")
 end
 local function UnblacklistPlayer(player)
-	if isfile("Self Bot RMA/saved_blacklists/"..tostring(player)..".txt") then
-		delfile("Self Bot RMA/saved_blacklists/"..tostring(player)..".txt")
-	end
+    if isfile("Self Bot RMA/saved_blacklists/" .. tostring(player) .. ".txt") then
+        delfile("Self Bot RMA/saved_blacklists/" .. tostring(player) .. ".txt")
+    end
 end
 local function AdminPlayer(player)
-	if isfile("Self Bot RMA/saved_blacklists/"..tostring(player)..".txt") then
-		delfile("Self Bot RMA/saved_blacklists/"..tostring(player)..".txt")
-	end
-	
-	writefile("Self Bot RMA/saved_admins/"..tostring(player)..".txt", "This player is a admin.")
+    if isfile("Self Bot RMA/saved_blacklists/" .. tostring(player) .. ".txt") then
+        delfile("Self Bot RMA/saved_blacklists/" .. tostring(player) .. ".txt")
+    end
+
+    writefile("Self Bot RMA/saved_admins/" .. tostring(player) .. ".txt", "This player is a admin.")
 end
 local function UnadminPlayer(player)
-	if isfile("Self Bot RMA/saved_admins/"..tostring(player)..".txt") then
-		delfile("Self Bot RMA/saved_admins/"..tostring(player)..".txt")
-	end
+    if isfile("Self Bot RMA/saved_admins/" .. tostring(player) .. ".txt") then
+        delfile("Self Bot RMA/saved_admins/" .. tostring(player) .. ".txt")
+    end
 end
-	
+
 if not game:IsLoaded() then
     game.Loaded:Wait()
 end
@@ -99,14 +114,20 @@ until game:GetService("Players") and game:GetService("Workspace") and game:GetSe
     game:GetService("UserInputService")
 
 for i, v in ipairs(game:GetService("Players"):GetPlayers()) do
-	if not isfile("Self Bot RMA/saved_points/"..tostring(v)..".txt") then
-		if table.find(Admins, v.Name) then
-			writefile("Self Bot RMA/saved_points/"..tostring(v)..".txt", game:GetService("HttpService"):JSONEncode(100000))
-		else
-			writefile("Self Bot RMA/saved_points/"..tostring(v)..".txt", game:GetService("HttpService"):JSONEncode(50))
-		end
-	end
-	
+    if not isfile("Self Bot RMA/saved_points/" .. tostring(v) .. ".txt") then
+        if table.find(Admins, v.Name) then
+            writefile(
+                "Self Bot RMA/saved_points/" .. tostring(v) .. ".txt",
+                game:GetService("HttpService"):JSONEncode(100000)
+            )
+        else
+            writefile(
+                "Self Bot RMA/saved_points/" .. tostring(v) .. ".txt",
+                game:GetService("HttpService"):JSONEncode(50)
+            )
+        end
+    end
+
     Gamble = Instance.new("NumberValue", v)
     Gamble.Name = "Gamble"
     Gamble.Value = 0
@@ -117,13 +138,19 @@ for i, v in ipairs(game:GetService("Players"):GetPlayers()) do
 end
 game:GetService("Players").PlayerAdded:Connect(
     function(player)
-        if not isfile("Self Bot RMA/saved_points/"..tostring(player)..".txt") then
-			if ReturnAdmin(tostring(player)) then
-				writefile("Self Bot RMA/saved_points/"..tostring(player)..".txt", game:GetService("HttpService"):JSONEncode(100000))
-			else
-				writefile("Self Bot RMA/saved_points/"..tostring(player)..".txt", game:GetService("HttpService"):JSONEncode(50))
-			end
-		end
+        if not isfile("Self Bot RMA/saved_points/" .. tostring(player) .. ".txt") then
+            if ReturnAdmin(tostring(player)) then
+                writefile(
+                    "Self Bot RMA/saved_points/" .. tostring(player) .. ".txt",
+                    game:GetService("HttpService"):JSONEncode(100000)
+                )
+            else
+                writefile(
+                    "Self Bot RMA/saved_points/" .. tostring(player) .. ".txt",
+                    game:GetService("HttpService"):JSONEncode(50)
+                )
+            end
+        end
 
         Gamble = Instance.new("NumberValue", player)
         Gamble.Name = "Gamble"
@@ -137,7 +164,7 @@ game:GetService("Players").PlayerAdded:Connect(
 local LocalPlayer = game:GetService("Players").LocalPlayer
 loadstring(game:HttpGet("https://pastebin.com/raw/tUUGAeaH", true))()
 for i, connection in pairs(getconnections(LocalPlayer.Idled)) do
-	connection:Disable()
+    connection:Disable()
 end
 local function returnHRP()
     if not LocalPlayer.Character then
@@ -162,6 +189,7 @@ end
 repeat
     task.wait()
 until returnHRP() and returnHUM()
+
 local function UpdateBooth(text, image)
     game:GetService("ReplicatedStorage").CustomiseBooth:FireServer(
         table.unpack(
@@ -205,12 +233,26 @@ end
 local function Die()
     returnHUM().Health = 0
 end
+local function Explode()
+    Die()
+    task.wait(0.2)
+    for _, v in ipairs(returnHUM().Parent:GetDescendants()) do
+        if v:IsA("BasePart") or v:IsA("Base Part") then
+            v.Velocity = Vector3.new(math.random(-100, 100), 150, math.random(-100,100))
+        end
+    end
+end
 local function Dance()
     ChatMain = require(LocalPlayer.PlayerScripts.ChatScript.ChatMain)
     ChatMain.MessagePosted:fire("/e dance" .. tostring(math.random(1, 2)))
 end
 local function PointsSystem(control, player)
-    if control == "forward" or control == "forwards" or control == "backwards" or control == "backward" or control == "left" or control == "right" or control == "jump" then
+    if
+        control == "forward" or control == "forwards" or control == "backwards" or control == "backward" or
+            control == "left" or
+            control == "right" or
+            control == "jump"
+     then
         if ReturnPoints(player) >= 5 or ReturnPoints(player) == 5 then
             RemovePoints(player, 5)
             return true
@@ -220,6 +262,13 @@ local function PointsSystem(control, player)
     elseif control == "die" then
         if ReturnPoints(player) >= 50 or ReturnPoints(player) == 50 then
             RemovePoints(player, 50)
+            return true
+        else
+            return false
+        end
+    elseif control == "explode" then
+        if ReturnPoints(player) >= 100 or ReturnPoints(player) == 100 then
+            RemovePoints(player, 100)
             return true
         else
             return false
@@ -262,308 +311,366 @@ local OnMessageEvent =
             if player then
                 local originalmsg = message
                 local message = string.lower(message)
-                
-				if not ReturnBlacklist(player) or Player == LocalPlayer then
-					if message == "forward" or message == "forwards" then
-						if PointsSystem(message, Player) == true then
-							game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-								player .. " has requested I go forward. Removed 5 points from them.",
-								"All"
+
+                if not ReturnBlacklist(player) or Player == LocalPlayer then
+                    if message == "forward" or message == "forwards" then
+                        if PointsSystem(message, Player) == true then
+                            game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                player .. " has requested I go forward. Removed 5 points from them.",
+                                "All"
+                            )
+                            Walk("Forward")
+                        else
+                            game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                "Sorry " .. player .. ", you don't have enough points.",
+                                "All"
+                            )
+                        end
+                    elseif message == "backwards" or message == "backward" then
+                        if PointsSystem(message, Player) == true then
+                            game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                player .. " has requested I go backwards. Removed 5 points from them.",
+                                "All"
+                            )
+                            Walk("Backwards")
+                        else
+                            game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                "Sorry " .. player .. ", you don't have enough points.",
+                                "All"
+                            )
+                        end
+                    elseif message == "left" then
+                        if PointsSystem(message, Player) == true then
+                            game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                player .. " has requested I go left. Removed 5 points from them.",
+                                "All"
+                            )
+                            Walk("Left")
+                        else
+                            game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                "Sorry " .. player .. ", you don't have enough points.",
+                                "All"
+                            )
+                        end
+                    elseif message == "right" then
+                        if PointsSystem(message, Player) == true then
+                            game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                player .. " has requested I go right. Removed 5 points from them.",
+                                "All"
+                            )
+                            Walk("Right")
+                        else
+                            game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                "Sorry " .. player .. ", you don't have enough points.",
+                                "All"
+                            )
+                        end
+                    elseif message == "die" then
+                        if PointsSystem(message, Player) == true then
+                            game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                player .. " has requested I die. Removed 50 points from them.",
+                                "All"
+                            )
+                            Die()
+                        else
+                            game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                "Sorry " .. player .. ", you don't have enough points.",
+                                "All"
+                            )
+                        end
+                    elseif message == "jump" then
+                        Jump()
+                        game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                            player .. " has requested I jump.",
+                            "All"
+                        )
+                    elseif message == "dance" then
+                        Dance()
+                        game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                            player .. " has requested I dance",
+                            "All"
+                        )
+                    elseif message == "controls" or message == "'controls'" then
+                        if NotShowingControls then
+                            NotShowingControls = false
+                            
+                            UpdateBooth(
+                                "[1] forward\n[2] backwards\n[3] left\n[4] right"
+                            )
+                            task.wait(4)
+                            UpdateBooth(
+								"[5] jump\n[6] die\n[7] points\n[8] gamble\n[9] work\n[10] explode"
 							)
-							Walk("Forward")
-						else
-							game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-								"Sorry " .. player .. ", you don't have enough points.",
-								"All"
-							)
-						end
-					elseif message == "backwards" or message == "backward" then
-						if PointsSystem(message, Player) == true then
-							game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-								player .. " has requested I go backwards. Removed 5 points from them.",
-								"All"
-							)
-							Walk("Backwards")
-						else
-							game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-								"Sorry " .. player .. ", you don't have enough points.",
-								"All"
-							)
-						end
-					elseif message == "left" then
-						if PointsSystem(message, Player) == true then
-							game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-								player .. " has requested I go left. Removed 5 points from them.",
-								"All"
-							)
-							Walk("Left")
-						else
-							game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-								"Sorry " .. player .. ", you don't have enough points.",
-								"All"
-							)
-						end
-					elseif message == "right" then
-						if PointsSystem(message, Player) == true then
-							game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-								player .. " has requested I go right. Removed 5 points from them.",
-								"All"
-							)
-							Walk("Right")
-						else
-							game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-								"Sorry " .. player .. ", you don't have enough points.",
-								"All"
-							)
-						end
-					elseif message == "die" then
-						if PointsSystem(message, Player) == true then
-							game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-								player .. " has requested I die. Removed 50 points from them.",
-								"All"
-							)
-							Die()
-						else
-							game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-								"Sorry " .. player .. ", you don't have enough points.",
-								"All"
-							)
-						end
-					elseif message == "jump" then
-						Jump()
-						game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-							player .. " has requested I jump.",
-							"All"
-						)
-					elseif message == "dance" then
-						Dance()
-						game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-							player .. " has requested I dance",
-							"All"
-						)
-					elseif message == "controls" or message == "'controls'" then
-						if NotShowingControls then
-							NotShowingControls = false
-							UpdateBooth(
-								"[1] forward\n[2] backwards\n[3] left\n[4] right\n[5] jump\n[6] die\n[7] points\n[8] gamble\n[9] work"
-							)
-							task.wait(8)
-							NotShowingControls = true
-						end
-					elseif message == "points" then
-						game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-							player ..
-								" has " ..
-									tostring(ReturnPoints(Player)) .. " points left. 10 points are given every minute.",
-							"All"
-						)
-					elseif message == "gamble" then
-						Correct = math.random(1, 4)
-						if Correct == 1 and CheckOption(message, Player) == true then
-							Player.Gamble.Value = 45
-							GivePoints(Player, 20)
-							game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-								player .. " has received 20 points through gambling!",
-								"All"
-							)
-						elseif CheckOption(message, Player) == true then
-							RemovePoints(Player, 20)
-							game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-								player .. " has lost 20 points through gambling.",
-								"All"
-							)
-						else
-							game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-								"Sorry " .. player .. ", you're still on cooldown.",
-								"All"
-							)
-						end
-					elseif message == "work" then
-						if CheckOption(message, Player) == true then
-							Player.Work.Value = 120
-							GivePoints(Player, 30)
-							game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-								player .. " received 30 points for working.",
-								"All"
-							)
-						else
-							game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-								"Sorry " .. player .. ", you're still on cooldown.",
-								"All"
-							)
-						end
-					elseif message == "1" or message == "2" or message == "3" or message == "4" or message == "5" or message == "6" or message == "7" or message == "8" or message == "9" then
-						game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-							"Reminder: You don't say the number, you say the word.",
-							"All"
-						)
-					end
-					
-					if Player == LocalPlayer then
-						if message:match("add admin") then
-							Split = string.split(message, " ")
-							PlayerName = Split[3]
 							
-							for _,v in ipairs(game:GetService("Players"):GetPlayers()) do
-								if string.lower(v.Name):match(PlayerName) or string.lower(v.DisplayName):match(PlayerName) then
-									Player2 = v
-								end
-							end
-							
-							if Player2 then
-								AdminPlayer(Player2)
-								game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-									"Success! " .. tostring(Player2.Name) .. " has been given admin controls.",
-									"All"
-								)
-							else
-								game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-									"Sorry " .. player .. ", that player isn't in this server.",
-									"All"
-								)
-							end
-						elseif message:match("remove admin") then
-							Split = string.split(message, " ")
-							PlayerName = Split[3]
-							
-							for _,v in ipairs(game:GetService("Players"):GetPlayers()) do
-								if string.lower(v.Name):match(PlayerName) or string.lower(v.DisplayName):match(PlayerName) then
-									Player2 = v
-								end
-							end
-							
-							if Player2 then
-								UnadminPlayer(Player2)
-								game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-									"Success! " .. tostring(Player2.Name) .. " has been removed admin controls.",
-									"All"
-								)
-							else
-								game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-									"Sorry " .. player .. ", that player isn't in this server.",
-									"All"
-								)
-							end
-						end
-					end
-					if ReturnAdmin(player) then
-						if message:match("add points") then
-							Split = string.split(message, " ")
-							PlayerName = Split[3]
-							Amount = tonumber(Split[4])
-							
-							for _,v in ipairs(game:GetService("Players"):GetPlayers()) do
-								if string.lower(v.Name):match(PlayerName) or string.lower(v.DisplayName):match(PlayerName) then
-									Player2 = v
-								end
-							end
-							
-							if Player2 then
-								GivePoints(Player2, Amount)
-								game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-									"Success! " .. tostring(Player2) .. " has been given "..tostring(Amount).." points.",
-									"All"
-								)
-							else
-								game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-									"Sorry " .. player .. ", that player isn't in this server.",
-									"All"
-								)
-							end
-						elseif message:match("remove points") then
-							Split = string.split(message, " ")
-							PlayerName = Split[3]
-							Amount = tonumber(Split[4])
-							
-							for _,v in ipairs(game:GetService("Players"):GetPlayers()) do
-								if string.lower(v.Name):match(PlayerName) or string.lower(v.DisplayName):match(PlayerName) then
-									Player2 = v
-								end
-							end
-							
-							if Player2 then
-								RemovePoints(Player2, Amount)
-								game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-									"Success! " .. tostring(Player2) .. " has been removed "..tostring(Amount).." points.",
-									"All"
-								)
-							else
-								game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-									"Sorry " .. player .. ", that player isn't in this server.",
-									"All"
-								)
-							end
-						elseif message:match("set points") then
-							Split = string.split(message, " ")
-							PlayerName = Split[3]
-							Amount = tonumber(Split[4])
-							
-							for _,v in ipairs(game:GetService("Players"):GetPlayers()) do
-								if string.lower(v.Name):match(PlayerName) or string.lower(v.DisplayName):match(PlayerName) then
-									Player2 = v
-								end
-							end
-							
-							if Player2 then
-								SetPoints(Player2, Amount)
-								game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-									"Success! " .. tostring(Player2) .. " has been set to "..tostring(Amount).." points.",
-									"All"
-								)
-							else
-								game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-									"Sorry " .. player .. ", that player isn't in this server.",
-									"All"
-								)
-							end
-						elseif message:match("add blacklist") then
-							Split = string.split(message, " ")
-							PlayerName = Split[3]
-							
-							for _,v in ipairs(game:GetService("Players"):GetPlayers()) do
-								if string.lower(v.Name):match(PlayerName) or string.lower(v.DisplayName):match(PlayerName) then
-									Player2 = v
-								end
-							end
-							
-							if Player2 then
-								BlacklistPlayer(Player2)
-								game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-									"Success! " .. tostring(Player2) .. " has been blacklisted.",
-									"All"
-								)
-							else
-								game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-									"Sorry " .. player .. ", that player isn't in this server.",
-									"All"
-								)
-							end
-						elseif message:match("remove blacklist") then
-							Split = string.split(message, " ")
-							PlayerName = Split[3]
-							
-							for _,v in ipairs(game:GetService("Players"):GetPlayers()) do
-								if string.lower(v.Name):match(PlayerName) or string.lower(v.DisplayName):match(PlayerName) then
-									Player2 = v
-								end
-							end
-							
-							if Player2 then
-								UnblacklistPlayer(tostring(Player2))
-								game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-									"Success! " .. tostring(Player2) .. " has been unblacklisted.",
-									"All"
-								)
-							else
-								game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-									"Sorry " .. player .. ", that player isn't in this server.",
-									"All"
-								)
-							end
-						end
-					end
-				end
-			end
+                            NotShowingControls = true
+                        end
+                    elseif message == "points" then
+                        game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                            player ..
+                                " has " ..
+                                    tostring(ReturnPoints(Player)) .. " points left. 10 points are given every minute.",
+                            "All"
+                        )
+                    elseif message == "gamble" then
+                        Correct = math.random(1, 4)
+                        if Correct == 1 and CheckOption(message, Player) == true then
+                            Player.Gamble.Value = 45
+                            GivePoints(Player, 20)
+                            game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                player .. " has received 20 points through gambling!",
+                                "All"
+                            )
+                        elseif CheckOption(message, Player) == true then
+                            RemovePoints(Player, 20)
+                            game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                player .. " has lost 20 points through gambling.",
+                                "All"
+                            )
+                        else
+                            game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                "Sorry " .. player .. ", you're still on cooldown.",
+                                "All"
+                            )
+                        end
+                    elseif message == "work" then
+                        if CheckOption(message, Player) == true then
+                            Player.Work.Value = 120
+                            GivePoints(Player, 30)
+                            game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                player .. " received 30 points for working.",
+                                "All"
+                            )
+                        else
+                            game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                "Sorry " .. player .. ", you're still on cooldown.",
+                                "All"
+                            )
+                        end
+                    elseif message == "explode" then
+                        if PointsSystem(message, Player) == true then
+                            game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                player .. " has requested I explode.",
+                                "All"
+                            )
+
+                            for i = 5, 0, -1 do
+                                task.wait(1)
+                                game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                    "Exploding in " .. tostring(i),
+                                    "All"
+                                )
+                            end
+
+                            Explode()
+                        else
+                            game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                "Sorry " .. player .. ", you're still on cooldown.",
+                                "All"
+                            )
+                        end
+                    elseif
+                        message == "1" or message == "2" or message == "3" or message == "4" or message == "5" or
+                            message == "6" or
+                            message == "7" or
+                            message == "8" or
+                            message == "9" or
+                            message == "10"
+                     then
+                        game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                            "Reminder: You don't say the number, you say the word.",
+                            "All"
+                        )
+                    end
+
+                    if Player == LocalPlayer then
+                        if message:match("add admin") then
+                            Split = string.split(message, " ")
+                            PlayerName = Split[3]
+
+                            for _, v in ipairs(game:GetService("Players"):GetPlayers()) do
+                                if
+                                    string.lower(v.Name):match(PlayerName) or
+                                        string.lower(v.DisplayName):match(PlayerName)
+                                 then
+                                    Player2 = v
+                                end
+                            end
+
+                            if Player2 then
+                                AdminPlayer(Player2)
+                                game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                    "Success! " .. tostring(Player2.Name) .. " has been given admin controls.",
+                                    "All"
+                                )
+                            else
+                                game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                    "Sorry " .. player .. ", that player isn't in this server.",
+                                    "All"
+                                )
+                            end
+                        elseif message:match("remove admin") then
+                            Split = string.split(message, " ")
+                            PlayerName = Split[3]
+
+                            for _, v in ipairs(game:GetService("Players"):GetPlayers()) do
+                                if
+                                    string.lower(v.Name):match(PlayerName) or
+                                        string.lower(v.DisplayName):match(PlayerName)
+                                 then
+                                    Player2 = v
+                                end
+                            end
+
+                            if Player2 then
+                                UnadminPlayer(Player2)
+                                game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                    "Success! " .. tostring(Player2.Name) .. " has been removed admin controls.",
+                                    "All"
+                                )
+                            else
+                                game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                    "Sorry " .. player .. ", that player isn't in this server.",
+                                    "All"
+                                )
+                            end
+                        end
+                    end
+                    if ReturnAdmin(player) then
+                        if message:match("add points") then
+                            Split = string.split(message, " ")
+                            PlayerName = Split[3]
+                            Amount = tonumber(Split[4])
+
+                            for _, v in ipairs(game:GetService("Players"):GetPlayers()) do
+                                if
+                                    string.lower(v.Name):match(PlayerName) or
+                                        string.lower(v.DisplayName):match(PlayerName)
+                                 then
+                                    Player2 = v
+                                end
+                            end
+
+                            if Player2 then
+                                GivePoints(Player2, Amount)
+                                game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                    "Success! " ..
+                                        tostring(Player2) .. " has been given " .. tostring(Amount) .. " points.",
+                                    "All"
+                                )
+                            else
+                                game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                    "Sorry " .. player .. ", that player isn't in this server.",
+                                    "All"
+                                )
+                            end
+                        elseif message:match("remove points") then
+                            Split = string.split(message, " ")
+                            PlayerName = Split[3]
+                            Amount = tonumber(Split[4])
+
+                            for _, v in ipairs(game:GetService("Players"):GetPlayers()) do
+                                if
+                                    string.lower(v.Name):match(PlayerName) or
+                                        string.lower(v.DisplayName):match(PlayerName)
+                                 then
+                                    Player2 = v
+                                end
+                            end
+
+                            if Player2 then
+                                RemovePoints(Player2, Amount)
+                                game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                    "Success! " ..
+                                        tostring(Player2) .. " has been removed " .. tostring(Amount) .. " points.",
+                                    "All"
+                                )
+                            else
+                                game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                    "Sorry " .. player .. ", that player isn't in this server.",
+                                    "All"
+                                )
+                            end
+                        elseif message:match("set points") then
+                            Split = string.split(message, " ")
+                            PlayerName = Split[3]
+                            Amount = tonumber(Split[4])
+
+                            for _, v in ipairs(game:GetService("Players"):GetPlayers()) do
+                                if
+                                    string.lower(v.Name):match(PlayerName) or
+                                        string.lower(v.DisplayName):match(PlayerName)
+                                 then
+                                    Player2 = v
+                                end
+                            end
+
+                            if Player2 then
+                                SetPoints(Player2, Amount)
+                                game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                    "Success! " ..
+                                        tostring(Player2) .. " has been set to " .. tostring(Amount) .. " points.",
+                                    "All"
+                                )
+                            else
+                                game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                    "Sorry " .. player .. ", that player isn't in this server.",
+                                    "All"
+                                )
+                            end
+                        elseif message:match("add blacklist") then
+                            Split = string.split(message, " ")
+                            PlayerName = Split[3]
+
+                            for _, v in ipairs(game:GetService("Players"):GetPlayers()) do
+                                if
+                                    string.lower(v.Name):match(PlayerName) or
+                                        string.lower(v.DisplayName):match(PlayerName)
+                                 then
+                                    Player2 = v
+                                end
+                            end
+
+                            if Player2 then
+                                BlacklistPlayer(Player2)
+                                game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                    "Success! " .. tostring(Player2) .. " has been blacklisted.",
+                                    "All"
+                                )
+                            else
+                                game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                    "Sorry " .. player .. ", that player isn't in this server.",
+                                    "All"
+                                )
+                            end
+                        elseif message:match("remove blacklist") then
+                            Split = string.split(message, " ")
+                            PlayerName = Split[3]
+
+                            for _, v in ipairs(game:GetService("Players"):GetPlayers()) do
+                                if
+                                    string.lower(v.Name):match(PlayerName) or
+                                        string.lower(v.DisplayName):match(PlayerName)
+                                 then
+                                    Player2 = v
+                                end
+                            end
+
+                            if Player2 then
+                                UnblacklistPlayer(tostring(Player2))
+                                game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                    "Success! " .. tostring(Player2) .. " has been unblacklisted.",
+                                    "All"
+                                )
+                            else
+                                game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                    "Sorry " .. player .. ", that player isn't in this server.",
+                                    "All"
+                                )
+                            end
+                        end
+                    end
+                end
+            end
         end
     end
 )
@@ -597,18 +704,22 @@ spawn(
     end
 )
 
-while task.wait() do
-    Message1 = 'Control my character for me!\nSay "controls" to see all controls.'
-    Message2 = ''
-    for v in Message1:gmatch '.' do
-        Message2 = Message2 .. v
-        if NotShowingControls then
-            UpdateBooth(Message2)
-            task.wait(.05)
+spawn(
+    function()
+        while task.wait() do
+            Message1 = 'Control my character for me!\nSay "controls" to see all controls.'
+            Message2 = ""
+            for v in Message1:gmatch "." do
+                Message2 = Message2 .. v
+                if NotShowingControls then
+                    UpdateBooth(Message2)
+                    task.wait(.05)
+                end
+            end
+
+            if NotShowingControls then
+                task.wait(8)
+            end
         end
     end
-
-    if NotShowingControls then
-        task.wait(8)
-    end
-end
+)
