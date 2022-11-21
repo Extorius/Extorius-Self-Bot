@@ -234,6 +234,8 @@ local function Die()
     returnHUM().Health = 0
 end
 local function Explode()
+	Jump()
+	task.wait(0.4)
     Die()
     task.wait(0.2)
     for _, v in ipairs(returnHUM().Parent:GetDescendants()) do
@@ -390,17 +392,24 @@ local OnMessageEvent =
                             player .. " has requested I dance",
                             "All"
                         )
-                    elseif message == "controls" or message == "'controls'" then
+                    elseif message == "controls" or message == '"controls"' then
                         if NotShowingControls then
                             NotShowingControls = false
                             
-                            UpdateBooth(
-                                "[1] forward\n[2] backwards\n[3] left\n[4] right"
-                            )
-                            task.wait(4)
-                            UpdateBooth(
-								"[5] jump\n[6] die\n[7] points\n[8] gamble\n[9] work\n[10] explode"
-							)
+                            for i=6,0,-1 do
+								UpdateBooth(
+									"[Page 1]\n1. forward\n2. backwards\n3. left\n4. right\n5. jump\n"..tostring(i)..".."
+								)
+								
+								task.wait(1)
+							end
+                            for i=6,0,-1 do
+								UpdateBooth(
+									"[Page 2]\n6. die\n7. points\n8. gamble\n9. work\n10. explode\n"..tostring(i)..".."
+								)
+								
+								task.wait(1)
+							end
 							
                             NotShowingControls = true
                         end
@@ -464,7 +473,7 @@ local OnMessageEvent =
                             Explode()
                         else
                             game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-                                "Sorry " .. player .. ", you're still on cooldown.",
+                                "Sorry " .. player .. ", you don't have enough points.",
                                 "All"
                             )
                         end
@@ -722,4 +731,22 @@ spawn(
             end
         end
     end
+)
+
+spawn(
+	function()
+		if AfkMode == "Accurate" then
+			while task.wait() do
+				game:GetService("ReplicatedStorage").AFK:FireServer(iswindowactive())
+			end
+		elseif AfkMode == "Spoof true" then
+			while task.wait() do
+				game:GetService("ReplicatedStorage").AFK:FireServer(true)
+			end
+		elseif AfkMode == "Spoof false" then
+			while task.wait() do
+				game:GetService("ReplicatedStorage").AFK:FireServer(false)
+			end
+		end
+	end
 )
