@@ -733,6 +733,12 @@ spawn(
     end
 )
 
+if not AfkMode then
+	AfkMode = "Accurate"
+elseif AfkMode ~= "Accurate" or AfkMode ~= "Spoof true" or AfkMode ~= "Spoof false" then
+	AfkMode = "Accurate"
+end
+
 spawn(
 	function()
 		if AfkMode == "Accurate" then
