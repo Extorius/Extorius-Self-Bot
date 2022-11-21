@@ -743,7 +743,7 @@ spawn(
 	function()
 		if AfkMode == "Accurate" then
 			while task.wait() do
-				game:GetService("ReplicatedStorage").AFK:FireServer(iswindowactive())
+				game:GetService("ReplicatedStorage").AFK:FireServer(if syn and iswindowactive() or identifyexecutor and isrbxactive())
 			end
 		elseif AfkMode == "Spoof true" then
 			while task.wait() do
