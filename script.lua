@@ -733,6 +733,7 @@ spawn(
     end
 )
 
+local ActiveFunc = identifyexecutor and isrbxactive or iswindowactive
 if not AfkMode then
 	AfkMode = "Accurate"
 elseif AfkMode ~= "Accurate" or AfkMode ~= "Spoof true" or AfkMode ~= "Spoof false" then
@@ -743,7 +744,7 @@ spawn(
 	function()
 		if AfkMode == "Accurate" then
 			while task.wait() do
-				game:GetService("ReplicatedStorage").AFK:FireServer(if syn and iswindowactive() or identifyexecutor and isrbxactive())
+				game:GetService("ReplicatedStorage").AFK:FireServer(not ActiveFunc())
 			end
 		elseif AfkMode == "Spoof true" then
 			while task.wait() do
