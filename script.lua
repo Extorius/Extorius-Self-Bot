@@ -250,6 +250,7 @@ local OnMessageEvent =
         if data ~= nil then
             local player = tostring(data.FromSpeaker)
             local Player = game:GetService("Players"):FindFirstChild(player)
+            local Player2 = nil
             local message = tostring(data.Message)
             local originalchannel = tostring(data.OriginalChannel)
             if string.find(originalchannel, "To ") then
