@@ -1,3 +1,5 @@
+local AfkMode = "Spoof true"
+
 local Admins = {"Enter", "Usernames", "Here", "ExtoriusOnTop"}
 local Blacklists = {"Enter", "Usernames", "Here"}
 local Saved_Points = {}
@@ -706,9 +708,13 @@ spawn(
             for _, v in ipairs(game:GetService("Players"):GetPlayers()) do
                 if v.Gamble.Value ~= 0 then
                     v.Gamble.Value = v.Gamble.Value - 1
+                elseif v.Gamble.Value == -1 then
+                	v.Gamble.Value = -1
                 end
                 if v.Work.Value ~= 0 then
                     v.Work.Value = v.Gamble.Value - 1
+                elseif v.Work.Value == -1 then
+                	v.Work.Value = 0
                 end
             end
         end
@@ -763,3 +769,8 @@ namecall =
         end
     end
 )
+spawn(function()
+	while task.wait(0.1) do
+		game:GetService("ReplicatedStorage").AFK:FireServer(nil)
+	end
+end)
