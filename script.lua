@@ -234,13 +234,13 @@ local function Die()
     returnHUM().Health = 0
 end
 local function Explode()
-	Jump()
-	task.wait(0.4)
+    Jump()
+    task.wait(0.4)
     Die()
     task.wait(0.2)
     for _, v in ipairs(returnHUM().Parent:GetDescendants()) do
         if v:IsA("BasePart") or v:IsA("Base Part") then
-            v.Velocity = Vector3.new(math.random(-100, 100), 150, math.random(-100,100))
+            v.Velocity = Vector3.new(math.random(-100, 100), 150, math.random(-100, 100))
         end
     end
 end
@@ -395,22 +395,24 @@ local OnMessageEvent =
                     elseif message == "controls" or message == '"controls"' then
                         if NotShowingControls then
                             NotShowingControls = false
-                            
-                            for i=6,0,-1 do
-								UpdateBooth(
-									"[Page 1]\n1. forward\n2. backwards\n3. left\n4. right\n5. jump\n"..tostring(i)..".."
-								)
-								
-								task.wait(1)
-							end
-                            for i=6,0,-1 do
-								UpdateBooth(
-									"[Page 2]\n6. die\n7. points\n8. gamble\n9. work\n10. explode\n"..tostring(i)..".."
-								)
-								
-								task.wait(1)
-							end
-							
+
+                            for i = 6, 0, -1 do
+                                UpdateBooth(
+                                    "[Page 1]\n1. forward\n2. backwards\n3. left\n4. right\n5. jump\n" ..
+                                        tostring(i) .. ".."
+                                )
+
+                                task.wait(1)
+                            end
+                            for i = 6, 0, -1 do
+                                UpdateBooth(
+                                    "[Page 2]\n6. die\n7. points\n8. gamble\n9. work\n10. explode\n" ..
+                                        tostring(i) .. ".."
+                                )
+
+                                task.wait(1)
+                            end
+
                             NotShowingControls = true
                         end
                     elseif message == "points" then
@@ -733,27 +735,31 @@ spawn(
     end
 )
 
-local ActiveFunc = identifyexecutor and isrbxactive or iswindowactive
 if not AfkMode then
-	AfkMode = "Accurate"
+    AfkMode = "Accurate"
 elseif AfkMode ~= "Accurate" or AfkMode ~= "Spoof true" or AfkMode ~= "Spoof false" then
-	AfkMode = "Accurate"
+    AfkMode = "Accurate"
 end
-
-spawn(
-	function()
-		if AfkMode == "Accurate" then
-			while task.wait() do
-				game:GetService("ReplicatedStorage").AFK:FireServer(not ActiveFunc())
+local namecall
+namecall =
+    hookmetamethod(
+    game,
+    "__namecall",
+    function(calledon, ...)
+        local method = getnamecallmethod()
+        local args = {...}
+        local args2 = args[2]
+        if method == "FireServer" and calledon.Name == "AFK" then
+            if AfkMode == "Accurate" then
+            	ActiveFunc = identifyexecutor and isrbxactive() or iswindowactive()
+            	return namecall(calledon, not ActiveFunc)
+            elseif AfkMode == "Spoof true" then
+            	return namecall(calledon, true)
+            elseif AfkMode == "Spoof false" then
+            	return namecall(calledon, false)
 			end
-		elseif AfkMode == "Spoof true" then
-			while task.wait() do
-				game:GetService("ReplicatedStorage").AFK:FireServer(true)
-			end
-		elseif AfkMode == "Spoof false" then
-			while task.wait() do
-				game:GetService("ReplicatedStorage").AFK:FireServer(false)
-			end
-		end
-	end
+        else
+			return namecall(calledon, ...)
+        end
+    end
 )
