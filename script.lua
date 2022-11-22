@@ -1,5 +1,3 @@
-local AfkMode = "Spoof true"
-
 local Admins = {"Enter", "Usernames", "Here", "ExtoriusOnTop"}
 local Blacklists = {"Enter", "Usernames", "Here"}
 local Saved_Points = {}
