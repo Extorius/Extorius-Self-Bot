@@ -504,7 +504,7 @@ local OnMessageEvent =
 					elseif message:match("gravity") and not message:match("gravity be changed.") and not message:match("gravity to default.") then
 						if PointsSystem("gravity", Player) == true then
 							if message =="-gravity" then
-								game:GetService("Workspace").Gravity=50
+								game:GetService("Workspace").Gravity=30
 									game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
 									player .. " has requested gravity be changed.",
 									"All"
@@ -516,7 +516,7 @@ local OnMessageEvent =
 									"All"
 								)
 							elseif message=="+gravity" then
-								game:GetService("Workspace").Gravity=300
+								game:GetService("Workspace").Gravity=400
 									game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
 									player .. " has requested gravity be changed.",
 									"All"
