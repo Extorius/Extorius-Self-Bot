@@ -276,19 +276,19 @@ local function PointsSystem(control, player)
             return false
         end
     elseif control == "gravity" then
-        if ReturnPoints(player) >= 100 or ReturnPoints(player) == 100 then
-            RemovePoints(player, 100)
-            return true
-        else
-            return false
-        end
-    elseif control == "sit" then
-        if ReturnPoints(player) >= 30 or ReturnPoints(player) == 30 then
-            RemovePoints(player, 30)
-            return true
-        else
-            return false
-        end
+    	if ReturnPoints(player) >= 100 or ReturnPoints(player) == 100 then
+    		RemovePoints(player, 100)
+    		return true
+    	else
+			return false
+		end
+	elseif control == "sit" then
+		if ReturnPoints(player) >= 30 or ReturnPoints(player) == 30 then
+    		RemovePoints(player, 30)
+    		return true
+    	else
+			return false
+		end
     end
 end
 local function CheckOption(option, player)
@@ -427,7 +427,10 @@ local OnMessageEvent =
                                 task.wait(1)
                             end
                             for i = 4, 0, -1 do
-                                UpdateBooth("[Page 3]\n11. sit\n12. gravity (number)" .. tostring(i) .. "..")
+                                UpdateBooth(
+                                    "[Page 3]\n11. sit\n12. (+ or -)gravity" ..
+                                        tostring(i) .. ".."
+                                )
 
                                 task.wait(1)
                             end
@@ -498,29 +501,42 @@ local OnMessageEvent =
                                 "All"
                             )
                         end
-                    elseif message:match("gravity") then
-                        if PointsSystem("gravity", Player) == true then
-                            game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-                                player .. " has requested gravity be changed.",
-                                "All"
-                            )
-
-                            workspace.Gravity = tonumber(string.gsub(message, "gravity ", ""))
-                            task.wait(60)
-                            workspace.Gravity = 196
-                            game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-                                "Returned gravity to default.",
-                                "All"
-                            )
+					elseif message:match("gravity") and not message:match("gravity be changed.") and not message:match("gravity to default.") then
+						if PointsSystem("gravity", Player) == true then
+							if message =="-gravity" then
+								game:GetService("Workspace").Gravity=50
+									game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+									player .. " has requested gravity be changed.",
+									"All"
+								)
+								task.wait(60)
+								game:GetService("Workspace").Gravity.Gravity=196
+								game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+								   "Returned gravity to default.",
+									"All"
+								)
+							elseif message=="+gravity" then
+								game:GetService("Workspace").Gravity=300
+									game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+									player .. " has requested gravity be changed.",
+									"All"
+								)
+								task.wait(60)
+								game:GetService("Workspace").Gravity.Gravity=196
+								game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+								   "Returned gravity to default.",
+									"All"
+								)
+							end
                         else
                             game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
                                 "Sorry " .. player .. ", you don't have enough points.",
                                 "All"
                             )
                         end
-                    elseif message:match("sit") then
-                        if PointsSystem("sit", Player) == true then
-                            returnHUM().Sit = true
+                    elseif message=="sit" then
+                    	if PointsSystem(message, Player) == true then
+                    		returnHUM().Sit=true
                             game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
                                 player .. " has requested I sit.",
                                 "All"
@@ -537,9 +553,7 @@ local OnMessageEvent =
                             message == "7" or
                             message == "8" or
                             message == "9" or
-                            message == "10" or
-                            message == "11" or
-                            message == "12"
+                            message == "10"
                      then
                         game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
                             "Reminder: You don't say the number, you say the word.",
@@ -761,12 +775,12 @@ spawn(
                 if v.Gamble.Value ~= 0 then
                     v.Gamble.Value = v.Gamble.Value - 1
                 elseif v.Gamble.Value == -1 then
-                    v.Gamble.Value = -1
+                	v.Gamble.Value = -1
                 end
                 if v.Work.Value ~= 0 then
                     v.Work.Value = v.Gamble.Value - 1
                 elseif v.Work.Value == -1 then
-                    v.Work.Value = 0
+                	v.Work.Value = 0
                 end
             end
         end
@@ -809,22 +823,20 @@ namecall =
         local args2 = args[2]
         if method == "FireServer" and calledon.Name == "AFK" then
             if AfkMode == "Accurate" then
-                ActiveFunc = identifyexecutor and isrbxactive() or iswindowactive()
-                return namecall(calledon, not ActiveFunc)
+            	ActiveFunc = identifyexecutor and isrbxactive() or iswindowactive()
+            	return namecall(calledon, not ActiveFunc)
             elseif AfkMode == "Spoof true" then
-                return namecall(calledon, true)
+            	return namecall(calledon, true)
             elseif AfkMode == "Spoof false" then
-                return namecall(calledon, false)
-            end
+            	return namecall(calledon, false)
+			end
         else
-            return namecall(calledon, ...)
+			return namecall(calledon, ...)
         end
     end
 )
-spawn(
-    function()
-        while task.wait(0.1) do
-            game:GetService("ReplicatedStorage").AFK:FireServer(nil)
-        end
-    end
-)
+spawn(function()
+	while task.wait(0.1) do
+		game:GetService("ReplicatedStorage").AFK:FireServer(nil)
+	end
+end)
