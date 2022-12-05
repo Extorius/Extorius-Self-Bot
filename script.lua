@@ -275,6 +275,20 @@ local function PointsSystem(control, player)
         else
             return false
         end
+    elseif control == "gravity" then
+    	if ReturnPoints(player) >= 100 or ReturnPoints(player) == 100 then
+    		RemovePoints(player, 100)
+    		return true
+    	else
+			return false
+		end
+	elseif control == "sit" then
+		if ReturnPoints(player) >= 30 or ReturnPoints(player) == 30 then
+    		RemovePoints(player, 30)
+    		return true
+    	else
+			return false
+		end
     end
 end
 local function CheckOption(option, player)
@@ -412,6 +426,14 @@ local OnMessageEvent =
 
                                 task.wait(1)
                             end
+                            for i = 4, 0, -1 do
+                                UpdateBooth(
+                                    "[Page 3]\n11. sit\n12. gravity (number)" ..
+                                        tostring(i) .. ".."
+                                )
+
+                                task.wait(1)
+                            end
 
                             NotShowingControls = true
                         end
@@ -473,6 +495,40 @@ local OnMessageEvent =
                             end
 
                             Explode()
+                        else
+                            game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                "Sorry " .. player .. ", you don't have enough points.",
+                                "All"
+                            )
+                        end
+					elseif message:match("gravity") then
+						if PointsSystem("gravity", Player) == true then
+                            game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                player .. " has requested gravity be changed.",
+                                "All"
+                            )
+
+                            workspace.Gravity=tonumber(string.gsub(message, "gravity ", ""))
+                            task.wait(60)
+                            workspace.Gravity=196
+                            game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                               "Returned gravity to default.",
+                                "All"
+                            )
+                            
+                        else
+                            game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                "Sorry " .. player .. ", you don't have enough points.",
+                                "All"
+                            )
+                        end
+                    elseif message:match("sit") then
+                    	if PointsSystem("sit", Player) == true then
+                    		returnHUM().Sit=true
+                            game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                player .. " has requested I sit.",
+                                "All"
+                            )
                         else
                             game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
                                 "Sorry " .. player .. ", you don't have enough points.",
