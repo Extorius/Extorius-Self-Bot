@@ -537,7 +537,9 @@ local OnMessageEvent =
                             message == "7" or
                             message == "8" or
                             message == "9" or
-                            message == "10"
+                            message == "10" or
+                            message == "11" or
+                            message == "12"
                      then
                         game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
                             "Reminder: You don't say the number, you say the word.",
